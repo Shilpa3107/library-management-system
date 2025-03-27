@@ -1,7 +1,16 @@
-
 <div class="header">
     <a th:href="@{/}" class="btn">Home</a>
     <a th:href="@{/books}" class="btn">View Books</a>
     <a th:href="@{/addBook}" class="btn">Add Book</a>
     <a th:href="@{/searchBook}" class="btn">Search Book</a>
+    <a th:href="@{/updateBook}" class="btn">Update Book</a> <!-- New Update Option -->
+    
+    <!-- Delete option is usually added directly within the book list, so not needed in the header -->
+
+    <!-- Exit Button -->
+    <form th:action="@{/shutdown}" method="post" style="display:inline;">
+        <button type="submit" class="btn" onclick="return confirm('Are you sure you want to exit the system?')">
+            Exit System
+        </button>
+    </form>
 </div>

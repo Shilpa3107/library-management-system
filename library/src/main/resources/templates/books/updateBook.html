@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Book</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+    <div th:insert="~{fragments/header :: .header}"></div>
+    <div class="container">
+        <h1>Update Book Details</h1>
+        <form th:action="@{/updateBook}" method="post">
+            <label>Book ID:</label>
+            <input type="number" name="id" required>
+            <br>
+            <label>Title:</label>
+            <input type="text" name="title" required>
+            <br>
+            <label>Author:</label>
+            <input type="text" name="author" required>
+            <br>
+            <label>Genre:</label>
+            <input type="text" name="genre" required>
+            <br>
+            <label>Status:</label>
+            <select name="status">
+                <option value="AVAILABLE">Available</option>
+                <option value="CHECKED_OUT">Checked Out</option>
+            </select>
+            <br>
+            <button type="submit">Update Book</button>
+        </form>
+    </div>
+</body>
+</html>
