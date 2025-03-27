@@ -1,9 +1,11 @@
 package com.library.controller;
 
+import com.library.model.AvailabilityStatus;
 import com.library.model.Book;
 import com.library.service.BookService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.context.ApplicationContext;
 
 import java.util.List;
 
@@ -11,10 +13,12 @@ import java.util.List;
 @RequestMapping("/api/books")
 public class BookController {
 
-    private final BookService bookService;
+      private final BookService bookService;
+    private final ApplicationContext context;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, ApplicationContext context) {
         this.bookService = bookService;
+        this.context = context;
     }
 
     @PostMapping
@@ -56,6 +60,32 @@ public ResponseEntity<Book> searchBook(@RequestParam(required = false) Long id,
 
     @PostMapping("/shutdown")
     public void shutdown() {
-        System.exit(0);
+        Thread thread = new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+                ((org.springframework.context.ConfigurableApplicationContext) context).close();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+        thread.start();
     }
+
+
+    @PostMapping("/updateBook")
+public String updateBook(@RequestParam Long id,
+                         @RequestParam String title,
+                         @RequestParam String author,
+                         @RequestParam String genre,
+                         @RequestParam String status) {
+    Book book = new Book();
+    book.setTitle(title);
+    book.setAuthor(author);
+    book.setGenre(genre);
+    book.setStatus(AvailabilityStatus.valueOf(status));
+    
+    bookService.updateBook(id, book);
+    return "redirect:/books"; // Redirect to view all books after update
+}
+
 }  
