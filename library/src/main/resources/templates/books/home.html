@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+    <div th:insert="~{fragments/header :: .header}"></div>
+    <div class="container">
+        <h1>Available Books</h1>
+        <ul>
+            <li th:each="book : ${books}">
+                <strong th:text="${book.title}"></strong> by 
+                <span th:text="${book.author}"></span> - 
+                <span th:text="${book.status}"></span>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
