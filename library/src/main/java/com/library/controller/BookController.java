@@ -35,11 +35,13 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Book> getBookByTitle(@RequestParam String title) {
-        return bookService.getBookByTitle(title)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
+public ResponseEntity<Book> searchBook(@RequestParam(required = false) Long id,
+                                       @RequestParam(required = false) String title) {
+    return bookService.findByIdOrTitle(id, title)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+}
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book book) {
@@ -51,4 +53,9 @@ public class BookController {
         bookService.deleteBook(id);
         return ResponseEntity.noContent().build();
     }
-}
+
+    @PostMapping("/shutdown")
+    public void shutdown() {
+        System.exit(0);
+    }
+}  
