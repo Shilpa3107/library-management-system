@@ -17,7 +17,6 @@
                     <th>Author</th>
                     <th>Genre</th>
                     <th>Status</th>
-                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,11 +26,6 @@
                     <td th:text="${book.author}"></td>
                     <td th:text="${book.genre}"></td>
                     <td th:text="${book.status}"></td>
-                    <td>
-                        <form th:action="@{/deleteBook/{id}(id=${book.id})}" method="post">
-                            <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
-                        </form>
-                    </td>
                 </tr>
             </tbody>
         </table>
